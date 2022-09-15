@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     @IBAction func redrawTapped(_ sender: Any) {
         currentDrawType += 1
         
-        if currentDrawType > 5 {
+        if currentDrawType > 6 {
             currentDrawType = 0
         }
         
@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         case 3: drawRotatedSquares()
         case 4: drawLines()
         case 5: drawImagesAndText()
+        case 6: drawLightningBolt()
         default: break
         }
     }
@@ -149,6 +150,29 @@ class ViewController: UIViewController {
             
             let mouse = UIImage(named: "mouse")
             mouse?.draw(at: CGPoint(x: 300, y: 150))
+        }
+        
+        imageView.image = image
+    }
+    
+    func drawLightningBolt() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        let image = renderer.image { context in
+            context.cgContext.translateBy(x: 256, y: 256)
+            
+            var first = true
+            var length: CGFloat = 256
+            
+            context.cgContext.move(to: CGPoint(x: 0, y: 0))
+            context.cgContext.addLine(to: CGPoint(x: -64, y: 0))
+            context.cgContext.addLine(to: CGPoint(x: 48, y: -64))
+            context.cgContext.addLine(to: CGPoint(x: 16, y: -16))
+            context.cgContext.addLine(to: CGPoint(x: 64, y: -16))
+            context.cgContext.addLine(to: CGPoint(x: -48, y: 64))
+            context.cgContext.addLine(to: CGPoint(x: 0, y: 0))
+            
+            context.cgContext.setFillColor(UIColor.systemYellow.cgColor)
+            context.cgContext.drawPath(using: .fillStroke)
         }
         
         imageView.image = image
